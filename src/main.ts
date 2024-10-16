@@ -130,7 +130,8 @@ main.addEventListener('click', (e) => {
   const color = disk_color[current]
 
   animating = true
-  const id = setInterval(() => {
+
+  const animation = () => {
     y += vy += g
 
     if (y + radius > base) {
@@ -153,16 +154,17 @@ main.addEventListener('click', (e) => {
         ctx.arc(cx, cy, 5, 0, 2 * Math.PI)
         ctx.fill()
       })
-      animating = false
-      return clearInterval(id)
+      draw_disks()
+      draw_hover(column)
+      return (animating = false)
     }
-  }, 1)
+    requestAnimationFrame(animation)
+  }
+  requestAnimationFrame(animation)
 
   columns[column].push(current)
 
-  draw_disks()
   turn()
-  draw_hover(column)
 })
 
 const draw_hover = (column: number) => {
